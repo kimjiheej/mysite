@@ -42,14 +42,15 @@ public class UserServlet extends HttpServlet {
 		    System.out.println(vo);
 		    response.sendRedirect(request.getContextPath()+"/user?a=joinsuccess");
 			
-		} else if("joinsuccess".equals(action)) {
-			
-			request.getRequestDispatcher("/WEB-INF/views/user/joinsuccess.jsp")
-			.forward(request, response);
-			
-			// 내가 원하는 요청이 아니다 !! 
-			response.sendRedirect(request.getContextPath());
 		}
+		 else if ("joinsuccess".equals(action)) {
+				request
+				.getRequestDispatcher("/WEB-INF/views/user/joinsuccess.jsp")
+				.forward(request, response);
+			} else {
+				response.sendRedirect(request.getContextPath());
+			}
+			
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
