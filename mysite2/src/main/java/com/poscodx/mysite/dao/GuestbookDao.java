@@ -31,7 +31,6 @@ public class GuestbookDao {
 		return conn;
 	}
 	
-    // 회원 정보 삽입 
 	// 회원 정보 삽입 
 	public void insert(GuestbookVo vo) {
 	    try (

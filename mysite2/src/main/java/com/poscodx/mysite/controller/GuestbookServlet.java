@@ -30,8 +30,6 @@ import com.poscodx.mysite.vo.GuestbookVo;
 public class GuestbookServlet extends ActionServlet {
 	private static final long serialVersionUID = 1L;
 
-
-		
 		private Map<String, Action> mapAction = Map.of(
 				"insert", new InsertGuestBook(),
 				"delete", new DeleteGuestBook(), 
@@ -43,3 +41,6 @@ public class GuestbookServlet extends ActionServlet {
 			return mapAction.getOrDefault(actionName, new GuestBookListAction());
 		}
 }
+
+
+

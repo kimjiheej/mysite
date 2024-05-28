@@ -20,9 +20,7 @@ public class LogoutAction implements Action {
 			session.removeAttribute("authUser");
 	        session.invalidate();
 		}
-		
-	
-        
+		    
         //redirect to main 
 		response.sendRedirect(request.getContextPath());
 		
