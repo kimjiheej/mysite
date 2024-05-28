@@ -58,8 +58,6 @@
 								<tr>
 									<td colspan=4>
 									 	   ${fn:replace(vo.getContents(), newline, "<br>") }
-									 	   
-						
 									</td>
 								</tr>
 							</table>
