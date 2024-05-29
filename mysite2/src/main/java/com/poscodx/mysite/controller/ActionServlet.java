@@ -36,4 +36,6 @@ public abstract class ActionServlet extends HttpServlet {
 	public static interface Action {
 		void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 	}
+	
+	
 }
