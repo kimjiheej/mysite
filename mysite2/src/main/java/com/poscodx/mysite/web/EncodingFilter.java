@@ -21,7 +21,6 @@ public class EncodingFilter extends HttpFilter implements Filter {
      if(encoding == null ) {
     	 encoding = "utf-8";
      }
-     
 	}
 
 	@Override
