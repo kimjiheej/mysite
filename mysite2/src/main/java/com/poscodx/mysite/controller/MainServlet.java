@@ -24,7 +24,6 @@ public class MainServlet extends ActionServlet {
 		super.init();
 	}
 
-
 	@Override
 	protected Action getAction(String actionName) {
 		return new MainAction();

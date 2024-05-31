@@ -24,7 +24,6 @@ public abstract class ActionServlet extends HttpServlet {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
-		
 		action.execute(req, resp);
 	}
 

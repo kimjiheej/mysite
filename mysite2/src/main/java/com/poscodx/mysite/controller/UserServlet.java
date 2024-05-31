@@ -35,6 +35,7 @@ public class UserServlet extends ActionServlet {
 		"update", new UpdateForm()
 	);
 	
+	
 	@Override
 	protected Action getAction(String actionName) {
 		return mapAction.getOrDefault(actionName, new MainAction());
