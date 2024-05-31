@@ -34,14 +34,25 @@
         <td>${totalItem - (current - 1) * onePagesItem - status.index}</td>
         
         <td class="fixed-width">
-            <div style="display: flex; align-items: center; margin-left: ${lists.depth * 20}px;">
-                <c:if test="${lists.depth >= 1}">
-                    <img src="${pageContext.request.contextPath}/assets/images/reply.png" />
-                </c:if>
-                <a href="${pageContext.request.contextPath}/board?a=view&no=${lists.no}&curPage=${current}" style="margin-left: 10px;">
-                    ${lists.title}
-                </a>
-            </div>
+            <c:choose>
+                <c:when test="${lists.depth == 0}">
+                    <div style="text-align: center;">
+                        <a href="${pageContext.request.contextPath}/board?a=view&no=${lists.no}&curPage=${current}">
+                            ${lists.title}
+                        </a>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div style="display: flex; align-items: center; margin-left: ${lists.depth * 20}px;">
+                        <c:if test="${lists.depth >= 1}">
+                            <img src="${pageContext.request.contextPath}/assets/images/reply.png" />
+                        </c:if>
+                        <a href="${pageContext.request.contextPath}/board?a=view&no=${lists.no}&curPage=${current}" style="margin-left: 10px;">
+                            ${lists.title}
+                        </a>
+                    </div>
+                </c:otherwise>
+            </c:choose>
         </td>
         <td>${lists.name}</td>
         <td>${lists.hit}</td>
