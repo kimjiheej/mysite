@@ -15,9 +15,9 @@
         <div id="content">
             <div id="board">
               <form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
-					<input type="submit" value="찾기">
-				</form>
+                    <input type="text" id="kwd" name="kwd" value="">
+                    <input type="submit" value="찾기">
+                </form>
                 <table class="tbl-ex">
                     <tr>
                         <th>번호</th>
@@ -27,36 +27,31 @@
                         <th>작성일</th>
                         <th>&nbsp;</th>
                     </tr>
-                    <c:forEach var="lists" items="${list}" varStatus="status">
-                        <tr>
-                        
-                            <td>${totalItem - (current - 1) * onePagesItem - status.index}</td>
-                            
-                            <td style="padding-left: ${(lists.depth-1) * 30}px;">
-                            
-                                <c:if test="${lists.depth >= 2}">
-                                    <img src="${pageContext.request.contextPath}/assets/images/reply.png" />
-                                </c:if>
-                                
-                                
-                                
-                                <a href="${pageContext.request.contextPath}/board?a=view&no=${lists.no}&curPage=${current}">
-                                    ${lists.title}
-                                </a>
-                                
-                                
-                            </td>
-                            <td>${lists.name}</td>
-                            <td>${lists.hit}</td>
-                            <td>${lists.reg_date}</td>
-                            
-                            
-                            <c:if test="${authUser.no eq lists.user_no}">
-                                <td><a href="${pageContext.request.contextPath}/board?a=delete&no=${lists.no}" class="del">삭제</a></td>
-                            </c:if>
-                            
-                        </tr>
-                    </c:forEach>
+                    
+                
+<c:forEach var="lists" items="${list}" varStatus="status">
+    <tr>
+        <td>${totalItem - (current - 1) * onePagesItem - status.index}</td>
+        
+        <td class="fixed-width">
+            <div style="display: flex; align-items: center; margin-left: ${lists.depth * 20}px;">
+                <c:if test="${lists.depth >= 1}">
+                    <img src="${pageContext.request.contextPath}/assets/images/reply.png" />
+                </c:if>
+                <a href="${pageContext.request.contextPath}/board?a=view&no=${lists.no}&curPage=${current}" style="margin-left: 10px;">
+                    ${lists.title}
+                </a>
+            </div>
+        </td>
+        <td>${lists.name}</td>
+        <td>${lists.hit}</td>
+        <td>${lists.reg_date}</td>
+        
+        <c:if test="${authUser.no eq lists.user_no}">
+            <td><a href="${pageContext.request.contextPath}/board?a=delete&no=${lists.no}" class="del">삭제</a></td>
+        </c:if>
+    </tr>
+</c:forEach>
                 </table>
                 <div class="pager">
                     <ul>
