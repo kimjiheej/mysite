@@ -70,7 +70,10 @@
                 </table>
                 <div class="pager">
                     <ul>
-                        <c:forEach var="index" begin="1" end="5">
+                        <c:if test="${current > 1}">
+                            <li><a href="?page=${current - 1}">&lt;</a></li>
+                        </c:if>
+                        <c:forEach var="index" begin="1" end="${totalPage}">
                             <c:choose>
                                 <c:when test="${index == current}">
                                     <li class="selected">${index}</li>
@@ -82,11 +85,8 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
-                        <c:if test="${current > 5}">
-                            <li><a href="?page=${current - 5}">&laquo;</a></li>
-                        </c:if>
-                        <c:if test="${(current + 5) <= totalPage}">
-                            <li><a href="?page=${current + 5}">&raquo;</a></li>
+                        <c:if test="${current < totalPage}">
+                            <li><a href="?page=${current + 1}">&gt;</a></li>
                         </c:if>
                     </ul>
                 </div>
