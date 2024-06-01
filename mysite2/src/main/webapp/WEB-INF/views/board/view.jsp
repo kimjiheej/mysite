@@ -38,11 +38,15 @@
                         <c:choose>
                             <c:when test="${board.user_no == authUser.no}">
                                 <a href="${pageContext.request.contextPath}/board?a=modifyform&no=${board.no}">글수정</a>
-                                <a href="${pageContext.request.contextPath}/board?a=writeform&no=${board.no}">답글 달기</a>
+                              <c:if test="${not empty authUser}">
+                <a href="${pageContext.request.contextPath}/board?a=writeform&no=${board.no}">답글 달기</a>
+            </c:if>
                                 <a href="${pageContext.request.contextPath}/board">글목록</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="${pageContext.request.contextPath}/board?a=writeform&no=${board.no}">답글 달기</a>
+                              <c:if test="${not empty authUser}">
+                <a href="${pageContext.request.contextPath}/board?a=writeform&no=${board.no}">답글 달기</a>
+            </c:if>
                                 <a href="${pageContext.request.contextPath}/board?page=${currentPage}">글목록</a>
                             </c:otherwise>
                         </c:choose>

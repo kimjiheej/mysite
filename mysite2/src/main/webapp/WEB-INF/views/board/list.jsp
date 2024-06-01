@@ -80,8 +80,10 @@
                         </c:if>
                     </ul>
                 </div>
-                <div class="bottom">
-                    <a href="${pageContext.request.contextPath}/board?a=writeform" id="new-book">글쓰기</a>
+                     <div class="bottom">
+                    <c:if test="${not empty authUser}">
+                        <a href="${pageContext.request.contextPath}/board?a=writeform" id="new-book">글쓰기</a>
+                    </c:if>
                 </div>
             </div>
         </div>
