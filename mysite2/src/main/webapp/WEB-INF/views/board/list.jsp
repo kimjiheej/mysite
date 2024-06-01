@@ -8,24 +8,16 @@
     <title>mysite</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <link href="${pageContext.request.contextPath}/assets/css/board.css" rel="stylesheet" type="text/css">
-    <style>
-        .empty-page {
-            color: #ccc;
-        }
-        .selected {
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
     <div id="container">
         <c:import url="/WEB-INF/views/includes/header.jsp" />
         <div id="content">
             <div id="board">
-                <form id="search_form" action="" method="post">
-                    <input type="text" id="kwd" name="kwd" value="">
-                    <input type="submit" value="찾기">
-                </form>
+              <form id="search_form" action="" method="post">
+					<input type="text" id="kwd" name="kwd" value="">
+					<input type="submit" value="찾기">
+				</form>
                 <table class="tbl-ex">
                     <tr>
                         <th>번호</th>
@@ -70,23 +62,21 @@
                 </table>
                 <div class="pager">
                     <ul>
-                        <c:if test="${current > 1}">
-                            <li><a href="?page=${current - 1}">&lt;</a></li>
+                        <c:if test="${start > 1}">
+                            <li><a href="?page=${start - 1}">◀</a></li>
                         </c:if>
-                        <c:forEach var="index" begin="1" end="${totalPage}">
+                        <c:forEach var="index" begin="${start}" end="${end}">
                             <c:choose>
                                 <c:when test="${index == current}">
                                     <li class="selected">${index}</li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li class="<c:if test='${emptyPages[index]}'>empty-page</c:if>">
-                                        <a href="?page=${index}">${index}</a>
-                                    </li>
+                                    <li><a href="?page=${index}">${index}</a></li>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
-                        <c:if test="${current < totalPage}">
-                            <li><a href="?page=${current + 1}">&gt;</a></li>
+                        <c:if test="${end < totalPage}">
+                            <li><a href="?page=${end + 1}">▶</a></li>
                         </c:if>
                     </ul>
                 </div>
