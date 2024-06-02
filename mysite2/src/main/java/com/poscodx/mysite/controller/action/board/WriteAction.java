@@ -53,7 +53,6 @@ public class WriteAction implements Action {
 			new BoardDao().Update(originVo.getG_no(), originVo.getO_no() + 1);
 		}
 		new BoardDao().insert(vo);
-		System.out.println(title + contents + currentDate + reg_Date + user_no + no + " " + vo.getG_no() + " " + vo.getO_no() + " " + vo.getDepth());
 		response.sendRedirect(request.getContextPath() + "/board");
 	}
 }

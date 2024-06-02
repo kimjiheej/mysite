@@ -42,8 +42,6 @@ public class BoardDao {
 	        pstmt.setInt(7, vo.getDepth());
 	        pstmt.setLong(8, vo.getUser_no());
 	        
-	     // depth 값 출력
-	        System.out.println("Inserting BoardVo with depth: " + vo.getDepth());
 	        pstmt.executeUpdate();
 	        ResultSet rs = pstmt2.executeQuery();
 	    	vo.setNo(rs.next() ?  rs.getInt(1) : null);
