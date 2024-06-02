@@ -41,16 +41,16 @@ public class WriteAction implements Action {
 
 		String no = request.getParameter("no");
 		if (no == null || "".equals(no)) {
-			vo.setG_no(new BoardDao().getNextGroupNo());
+			vo.setG_no(new BoardDao().getNextNumber());
 			vo.setDepth(0); // 처음 글을 쓸 때 depth를 0으로 설정
 			vo.setO_no(1);
 		} else {
-			BoardVo existedVo = new BoardDao().getBoard(no);
+			BoardVo originVo = new BoardDao().getBoard(no);
 			vo.setReg_date(reg_Date);
-			vo.setG_no(existedVo.getG_no());
-			vo.setO_no(existedVo.getO_no() + 1);
-			vo.setDepth(existedVo.getDepth() + 1);
-			new BoardDao().Update(existedVo.getG_no(), existedVo.getO_no() + 1);
+			vo.setG_no(originVo.getG_no());
+			vo.setO_no(originVo.getO_no() + 1);
+			vo.setDepth(originVo.getDepth() + 1);
+			new BoardDao().Update(originVo.getG_no(), originVo.getO_no() + 1);
 		}
 		new BoardDao().insert(vo);
 		System.out.println(title + contents + currentDate + reg_Date + user_no + no + " " + vo.getG_no() + " " + vo.getO_no() + " " + vo.getDepth());

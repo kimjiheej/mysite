@@ -18,7 +18,7 @@ public class BoardDao {
 		Connection conn = null;
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			String url = "jdbc:mariadb://172.30.1.58:3306/webdb?charset=utf8";
+			String url = "jdbc:mariadb://192.168.0.11/webdb?charset=utf8";
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -199,7 +199,7 @@ public class BoardDao {
 	    return result;
 	}
 	 // 다음 group 의 no 찾아주기 
-	public int getNextGroupNo() {
+	public int getNextNumber() {
 	    int result = 1;
 	    try (
 	        Connection conn = getConnection();
