@@ -34,7 +34,7 @@
                                 <c:choose>
                                     <c:when test="${lists.depth == 0}">
                                         <div style="text-align: center;">
-                                            <a href="${pageContext.request.contextPath}/board?a=view&no=${lists.no}&curPage=${current}">
+                                         <a href="${pageContext.request.contextPath}/board/view?no=${lists.no}&curPage=${current}">
                                                 ${lists.title}
                                             </a>
                                         </div>
@@ -44,7 +44,7 @@
                                             <c:if test="${lists.depth >= 1}">
                                                 <img src="${pageContext.request.contextPath}/assets/images/reply.png" />
                                             </c:if>
-                                            <a href="${pageContext.request.contextPath}/board?a=view&no=${lists.no}&curPage=${current}" style="margin-left: 10px;">
+                                           <a href="${pageContext.request.contextPath}/board/view?no=${lists.no}&curPage=${current}" style="margin-left: 10px;">
                                                 ${lists.title}
                                             </a>
                                         </div>
@@ -55,7 +55,7 @@
                             <td>${lists.hit}</td>
                             <td>${lists.reg_date}</td>
                             <c:if test="${authUser.no eq lists.user_no}">
-                                <td><a href="${pageContext.request.contextPath}/board?a=delete&no=${lists.no}" class="del">삭제</a></td>
+                                <td><a href="${pageContext.request.contextPath}/board/delete/${lists.no}" class="del">삭제</a></td>
                             </c:if>
                         </tr>
                     </c:forEach>
@@ -82,7 +82,8 @@
                 </div>
                      <div class="bottom">
                     <c:if test="${not empty authUser}">
-                        <a href="${pageContext.request.contextPath}/board?a=writeform" id="new-book">글쓰기</a>
+                      <!--  /board/writeform 완료  -->
+                        <a href="${pageContext.request.contextPath}/board/writeform" id="new-book">글쓰기</a>
                     </c:if>
                 </div>
             </div>

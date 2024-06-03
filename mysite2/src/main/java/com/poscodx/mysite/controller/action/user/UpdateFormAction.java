@@ -26,6 +26,8 @@ public class UpdateFormAction implements Action {
 			response.sendRedirect(request.getContextPath());
 			return;
 		}
+		
+	     
 		///////////////////////////////////////////////////////////
 		
 		UserVo userVo = new UserDao().findByNo(authUser.getNo());

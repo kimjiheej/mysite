@@ -39,7 +39,6 @@ public class GuestbookController {
 	
 	@RequestMapping(value="/insert", method=RequestMethod.POST)
 	public String insert(GuestbookVo vo) {
-
 		    guestbookService.addContents(vo);
 			return  "redirect:/guestbook";
 		}

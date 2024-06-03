@@ -1,4 +1,4 @@
-package com.poscodx.mysite.dao;
+package com.poscodx.mysite.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,11 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.poscodx.mysite.vo.BoardVo;
-import com.poscodx.mysite.vo.GuestbookVo;
 
-public class BoardDao {
-
+@Repository
+public class BoardRepository {
+	
 	// 커넥션 만들기 
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
