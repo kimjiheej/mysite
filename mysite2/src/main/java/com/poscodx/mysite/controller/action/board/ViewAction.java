@@ -23,5 +23,4 @@ public class ViewAction implements Action {
 		request.setAttribute("currentPage", currentPage);
 		request.getRequestDispatcher("/WEB-INF/views/board/view.jsp").forward(request, response);
 	}
-
 }
