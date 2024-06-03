@@ -18,5 +18,4 @@ public class DeleteAction implements Action {
 	new BoardDao().deleteBoard(no);
 	response.sendRedirect(request.getContextPath()+"/board");
 	}
-
 }
