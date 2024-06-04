@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
+import com.poscodx.mysite.exception.UserRepositoryException;
 import com.poscodx.mysite.vo.UserVo;
 
 
@@ -19,7 +20,7 @@ public class UserRepository {
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			
-			String url = "jdbc:mariadb://172.30.1.58:3306/webdb?charset=utf8";
+			String url = "jdbc:mariadb://192.168.0.201:3306/webdb?charset=utf8";
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패:" + e);
@@ -75,7 +76,7 @@ public class UserRepository {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			System.out.println("Error:" + e);
+			throw new UserRepositoryException(e.toString());
 		}		
 		
 		return result;
