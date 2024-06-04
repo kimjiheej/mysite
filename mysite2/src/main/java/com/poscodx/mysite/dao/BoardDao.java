@@ -18,7 +18,7 @@ public class BoardDao {
 		Connection conn = null;
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			String url = "jdbc:mariadb://172.30.1.58/webdb?charset=utf8";
+			String url = "jdbc:mariadb://192.168.0.201:3306/webdb?charset=utf8";
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
