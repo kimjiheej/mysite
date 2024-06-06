@@ -1,12 +1,17 @@
 package com.poscodx.mysite.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,74 +21,74 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 import com.poscodx.mysite.service.BoardService;
 import com.poscodx.mysite.vo.BoardVo;
+import com.poscodx.mysite.vo.UserVo;
 
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-
 	
 	@Autowired
-	private BoardService boardService;
+    private BoardService boardService;
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String index(Model model,
+                        @RequestParam(value = "page", defaultValue = "1") String page) {
+
+        int current = 1;
+        if (!page.equals("")) {
+            current = Integer.parseInt(page);
+        }
+
+        int showingPages = 5;  // Number of pages to show in pagination
+        int boardPerPage = 7;  // Number of items per page
+
+        List<BoardVo> lists = boardService.getContentsList(current, boardPerPage);
+        int totalItems = boardService.getTotalBoard();
+        int totalPages = (int) Math.ceil((double) totalItems / boardPerPage);
+
+        int startPage = ((current - 1) / showingPages) * showingPages + 1;
+        int endPage = Math.min(startPage + showingPages - 1, totalPages);
+
+        boolean[] emptyPages = new boolean[totalPages + 1];
+        for (int i = 1; i <= totalPages; i++) {
+            emptyPages[i] = boardService.getContentsList(i, boardPerPage).isEmpty();
+        }
+
+        model.addAttribute("start", startPage);
+        model.addAttribute("end", endPage);
+        model.addAttribute("totalPage", totalPages);
+        model.addAttribute("list", lists);
+        model.addAttribute("current", current);
+        model.addAttribute("totalItem", totalItems);
+        model.addAttribute("onePagesItem", boardPerPage);
+        model.addAttribute("emptyPages", emptyPages);
+
+        return "board/list";
+    }
 	
-	// writeform 으로 전환되는 메서드이다. 
-	@RequestMapping(value="/writeform", method=RequestMethod.GET)
-    public String write () {
-		return "board/write";
+	@RequestMapping("/view/{no}")
+	public String view(@PathVariable("no") Long no, @RequestParam("curPage") String current, Model model) {
+			
+		String currentPage = current;
+		BoardVo board = boardService.getBoard(String.valueOf(no));
+		boardService.modifyHit(String.valueOf(no));
+		  model.addAttribute("board", board);
+	        model.addAttribute("currentPage", currentPage);
+	        return "board/view";
+	}
+
+	@RequestMapping("/delete/{no}")
+	public String delete(@PathVariable("no") Long no) {
+		
+		boardService.delete(String.valueOf(no));
+
+		return "redirect:/board";
 	}
 	
-	// 처음에 board 로 들어왔을 때에 이렇게 해주기 
-	  @RequestMapping(value="", method=RequestMethod.GET)
-	    public String main(@RequestParam(value="page", defaultValue="1") int current, Model model) {
-	        int showingPages = 5;  // 한 번에 보여줄 페이지 번호 개수
-	        int boardPerPage = 7;  // 한 페이지에 표시할 게시글 개수
-
-	        // BoardService를 통해 필요한 데이터 가져오기
-	        List<BoardVo> lists = boardService.findPage(current, boardPerPage);
-	        int totalItems = boardService.getTotalBoard();
-	        int totalPages = (int) Math.ceil((double) totalItems / boardPerPage);
-
-	        int startPage = ((current - 1) / showingPages) * showingPages + 1;
-	        int endPage = Math.min(startPage + showingPages - 1, totalPages);
-
-	        boolean[] emptyPages = new boolean[totalPages + 1];  // 전체 페이지 개수에 맞게 배열 크기 설정
-	        for (int i = 1; i <= totalPages; i++) {
-	            emptyPages[i] = boardService.findPage(i, boardPerPage).isEmpty();
-	        }
-
-	        model.addAttribute("start", startPage);
-	        model.addAttribute("end", endPage);
-	        model.addAttribute("totalPage", totalPages);
-	        model.addAttribute("list", lists);
-	        model.addAttribute("current", current);
-	        model.addAttribute("totalItem", totalItems);
-	        model.addAttribute("onePagesItem", boardPerPage);
-	        model.addAttribute("emptyPages", emptyPages);
-
-	        // 정보들을 저장해서 해당 페이지로 넘겨준다 
-	        return "board/list";  // JSP 페이지로 이동하기 
-	  }	 
-	  
-	  // view 
-	  
-	  @RequestMapping(value="/view", method=RequestMethod.GET)
-	  public String view(@RequestParam("no") int no, @RequestParam("curPage") int page, Model model) {
-		  
-		  BoardVo board = boardService.getBoard(String.valueOf(no));
-		  model.addAttribute("board",board);
-		  model.addAttribute("currentPage", page);
-		  return "/board/view";
-	  }
-	  
-	  // 게시판 삭제하기 
-	  
-	  @RequestMapping(value = "/delete/{no}", method = RequestMethod.GET)
-	  public String deleteBoard(@PathVariable("no") int no, Model model) {
-		  boardService.deleteBoard(String.valueOf(no));
-		  return "redirect:/board";
-	  }
-	  
-	  
-	 
+	
+	
+	
 }

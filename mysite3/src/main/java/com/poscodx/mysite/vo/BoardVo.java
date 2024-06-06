@@ -81,8 +81,4 @@ public class BoardVo {
 				+ reg_date + ", g_no=" + g_no + ", o_no=" + o_no + ", depth=" + depth + ", user_no=" + user_no
 				+ ", name=" + name + "]";
 	}
-	
-
-	
-	
 }

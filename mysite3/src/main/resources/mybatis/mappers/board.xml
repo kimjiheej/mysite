@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+    <select id="findPage" resultType="BoardVo" parameterType="map">
+        <![CDATA[
+        SELECT
+          a.no, a.title, a.contents, a.hit, a.reg_date, a.g_no, a.o_no, a.depth, a.user_no, b.name
+        FROM
+          board a
+        JOIN
+          user b ON a.user_no = b.no
+        ORDER BY
+          a.g_no DESC, a.o_no ASC
+        LIMIT #{offset}, #{limit}
+        ]]>
+    </select>
+
+    <select id="getTotalBoard" resultType="int">
+        <![CDATA[
+        SELECT
+          COUNT(*) 
+        FROM
+          board
+        ]]>
+    </select>
+    
+   <select id="getBoard" resultType="BoardVo" parameterType="string">
+    SELECT
+      a.no, a.title, a.contents, a.hit, a.reg_date, a.g_no, a.o_no, a.depth, a.user_no, b.name
+    FROM
+      board a
+    JOIN
+      user b ON a.user_no = b.no
+    WHERE
+      a.no = #{no}
+</select>
+
+   <update id="modifyHit" parameterType="string">
+       	 	    UPDATE board
+    SET hit = hit + 1
+    WHERE no = #{no}
+   </update>
+   
+   <delete id="deleteBoard" parameterType="string">
+   DELETE FROM board WHERE no=#{no}
+   </delete>
+   
+ 
+    
+</mapper>

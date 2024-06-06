@@ -49,7 +49,7 @@
 									<td>[${count - status.index}]</td>
 									<td>${vo.name}</td>
 									<td>
-										<fmt:formatDate value="${vo.regDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+									   ${vo.regDate} 
 									</td>
 									<td><a href="${pageContext.request.contextPath}/guestbook/deleteform/${vo.no}">삭제</a></td>
 								</tr>

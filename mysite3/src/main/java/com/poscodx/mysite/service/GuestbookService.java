@@ -11,21 +11,19 @@ import com.poscodx.mysite.vo.GuestbookVo;
 
 @Service
 public class GuestbookService {
-
+	
 	@Autowired
 	private GuestbookRepository guestbookRepository;
 	
-	public List<GuestbookVo> getGuestbookList() {
-	List<GuestbookVo> list = 	guestbookRepository.findAll();
-		return list;
+	public List<GuestbookVo> getContentsList() {
+		return guestbookRepository.findAll();
 	}
 	
-    public void deleteContents(Long no, String password) {
-    	guestbookRepository.delete(String.valueOf(no), password);
-    }
-    
-    public void addContents(GuestbookVo vo) {
-    	guestbookRepository.insert(vo);
-    }
+	public void deleteContents(Long no, String password) {
+		guestbookRepository.deleteByNoAndPassword(no, password);
+	}
 	
+	public void addContents(GuestbookVo vo) {
+		guestbookRepository.insert(vo);
+	}
 }

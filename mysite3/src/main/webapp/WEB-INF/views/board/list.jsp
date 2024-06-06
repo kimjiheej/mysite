@@ -34,7 +34,7 @@
                                 <c:choose>
                                     <c:when test="${lists.depth == 0}">
                                         <div style="text-align: center;">
-                                         <a href="${pageContext.request.contextPath}/board/view?no=${lists.no}&curPage=${current}">
+                                  <a href="${pageContext.request.contextPath}/board/view/${lists.no}?curPage=${current}" >
                                                 ${lists.title}
                                             </a>
                                         </div>
@@ -44,7 +44,7 @@
                                             <c:if test="${lists.depth >= 1}">
                                                 <img src="${pageContext.request.contextPath}/assets/images/reply.png" />
                                             </c:if>
-                                           <a href="${pageContext.request.contextPath}/board/view?no=${lists.no}&curPage=${current}" style="margin-left: 10px;">
+                                           <a href="${pageContext.request.contextPath}/board/view/${lists.no}?curPage=${current}" style="margin-left: 10px;">
                                                 ${lists.title}
                                             </a>
                                         </div>

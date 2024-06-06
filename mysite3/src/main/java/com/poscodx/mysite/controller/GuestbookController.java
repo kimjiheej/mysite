@@ -22,6 +22,7 @@ import com.poscodx.mysite.service.UserService;
 import com.poscodx.mysite.vo.GuestbookVo;
 import com.poscodx.mysite.vo.UserVo;
 
+
 @Controller
 @RequestMapping("/guestbook")
 public class GuestbookController {
@@ -32,7 +33,7 @@ public class GuestbookController {
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String showingGuestbook(Model model) {
-		List<GuestbookVo> list = guestbookService.getGuestbookList();
+		List<GuestbookVo> list = guestbookService.getContentsList();
 		model.addAttribute("list",list);
 		return "guestbook/list";
 	}
