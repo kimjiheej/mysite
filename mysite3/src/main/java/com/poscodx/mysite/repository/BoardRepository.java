@@ -42,4 +42,22 @@ public class BoardRepository {
 		sqlSession.delete("board.deleteBoard", no);
 	}
    
+	public void insert(BoardVo vo) {
+		sqlSession.insert("board.insertBoard", vo);
+	}
+	
+	public int getNextNum() {
+	    return sqlSession.selectOne("board.getNextNumber");
+	}
+	
+	public void modifyBoard(String no, String title, String contents) {
+		sqlSession.update("board.modifyBoard", Map.of("no", no, "title", title, "contents", contents));
+	}
+	
+	
+	public void updateBoard(int g_no, int o_no) {
+	       sqlSession.update("board.updateBoard",Map.of("g_no",g_no,"o_no",o_no));
+		
+	}
+	
 }
