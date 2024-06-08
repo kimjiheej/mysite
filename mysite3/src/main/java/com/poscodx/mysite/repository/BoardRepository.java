@@ -17,7 +17,7 @@ public class BoardRepository {
     public BoardRepository(SqlSession sqlSession) {
         this.sqlSession = sqlSession;
     }
-
+    
     public List<BoardVo> findAll(int currentPage, int boardPerPage) {
         Map<String, Object> params = new HashMap<>();
         params.put("offset", (currentPage - 1) * boardPerPage);
@@ -29,17 +29,15 @@ public class BoardRepository {
         return sqlSession.selectOne("board.getTotalBoard");
     }
     
-    public BoardVo getBoard(String no) {
-        return sqlSession.selectOne("board.getBoard", no);
+    public BoardVo getBoard(Long no) {
+        return sqlSession.selectOne("board.getBoard", String.valueOf(no));
+    }
+    public void modifyHit(Long no) {
+    	sqlSession.update("board.modifyHit", String.valueOf(no));
     }
     
-   
-    public void modifyHit(String no) {
-    	sqlSession.update("board.modifyHit", no);
-    }
-    
-	public void deleteBoard(String no) {
-		sqlSession.delete("board.deleteBoard", no);
+	public void deleteBoard(Long no, Long userNo) {
+		sqlSession.delete("board.deleteBoard", Map.of("no",no,"userNo",userNo));
 	}
    
 	public void insert(BoardVo vo) {
@@ -50,14 +48,13 @@ public class BoardRepository {
 	    return sqlSession.selectOne("board.getNextNumber");
 	}
 	
-	public void modifyBoard(String no, String title, String contents) {
-		sqlSession.update("board.modifyBoard", Map.of("no", no, "title", title, "contents", contents));
+	public void modifyBoard(BoardVo vo) {
+		sqlSession.update("board.modifyBoard", vo);
 	}
 	
 	
 	public void updateBoard(int g_no, int o_no) {
 	       sqlSession.update("board.updateBoard",Map.of("g_no",g_no,"o_no",o_no));
-		
 	}
 	
 }

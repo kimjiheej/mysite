@@ -71,44 +71,36 @@ public class BoardController {
         return "board/list";
     }
     
-    /*
-     	String no = request.getParameter("no");
-		String currentPage = request.getParameter("curPage");
-		BoardVo board = new BoardDao().getBoard(no);
-		new BoardDao().modifyHit(no);
-		request.setAttribute("board", board);
-		request.setAttribute("currentPage", currentPage);
-		request.getRequestDispatcher("/WEB-INF/views/board/view.jsp").forward(request, response);
-	}
-     */
-	
+  
 	@RequestMapping(value ="/view/{no}", method=RequestMethod.GET)
 	public String view(@PathVariable("no") Long no, 
             @RequestParam(value = "curPage", required = false) String current, 
             Model model) {
-			
 		String currentPage = current;
-		BoardVo board = boardService.getBoard(String.valueOf(no));
-		boardService.modifyHit(String.valueOf(no));
+		BoardVo board = boardService.getContents(no);
+		boardService.modifyHit(no);
 		  model.addAttribute("board", board);
 	        model.addAttribute("currentPage", currentPage);
 	        return "board/view";
 	}
 
 	@RequestMapping(value="/delete/{no}", method=RequestMethod.GET)
-	public String delete(@PathVariable("no") Long no) {
-		
-		boardService.delete(String.valueOf(no));
-
+	public String delete(@PathVariable("no") Long no, HttpSession session) {
+	
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		boardService.deleteContents(no, authUser.getNo());
 		return "redirect:/board";
 	}
+	
 	
 	  @RequestMapping(value="/writeform", method=RequestMethod.GET)
 	    public String writeForm(HttpSession session, Model model) {
 	        UserVo authUser = (UserVo) session.getAttribute("authUser");
-	        return "board/write"; // 작성 폼 페이지로 포워드
+	        model.addAttribute(authUser);
+	        return "board/write";
 	    }
-	
+	  
+	  
 	   @RequestMapping(value="/write", method=RequestMethod.POST)
 	  public String write(HttpSession session, 
 	                      @RequestParam("title") String title, 
@@ -121,7 +113,7 @@ public class BoardController {
 	      } else {
 	          model.addAttribute("authUser", authUser);
 	      }
-
+	      
 	      Date currentDate = new Date();
 	      SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 	      String reg_Date = formatter.format(currentDate);
@@ -131,14 +123,15 @@ public class BoardController {
 	      vo.setContents(contents);
 	      vo.setReg_date(reg_Date);
 	      vo.setUser_no(authUser.getNo());
-
+	     
+	      
 	      if (num == null) {
 	          vo.setG_no(boardService.getNextNumber());
 	          vo.setDepth(0);
 	          vo.setO_no(1);
 	      } else {
-	          String no = String.valueOf(num); // Convert num to String
-	          BoardVo originVo = boardService.getBoard(no);
+	          Long no = num; // Convert num to String
+	          BoardVo originVo = boardService.getContents(no);
 	          vo.setReg_date(reg_Date);
 	          vo.setG_no(originVo.getG_no());
 	          vo.setO_no(originVo.getO_no() + 1);
@@ -146,17 +139,17 @@ public class BoardController {
 	          boardService.Update(originVo.getG_no(), originVo.getO_no() + 1);
 	      }
 
-	      boardService.insert(vo); // Assuming this method saves the board entry
+	      boardService.addContents(vo); // Assuming this method saves the board entry
 	      return "redirect:/board"; // Redirect to board page after creating or updating board entry
 	  }
 	   
 	   @RequestMapping(value="/modifyform", method=RequestMethod.GET)
-	   public String modifyForm(@RequestParam("no") String no, HttpSession session, Model model) {
+	   public String modifyForm(@RequestParam("no") Long no, HttpSession session, Model model) {
 	       UserVo authUser = (UserVo) session.getAttribute("authUser");
 	       if (authUser == null) {
 	           return "redirect:/user/login";
 	       }
-	       BoardVo list = boardService.getBoard(no);
+	       BoardVo list = boardService.getContents(no);
 	       model.addAttribute("list", list);
 	       return "board/modify";
 	   }
@@ -164,7 +157,14 @@ public class BoardController {
 	  
 	   @RequestMapping(value="/modify", method=RequestMethod.POST)
 	   public String modify(@RequestParam("no") Long no, @RequestParam("title") String title, @RequestParam("contents") String contents ) {
-		   boardService.modifyBoard(String.valueOf(no), title,contents);
+		
+		   BoardVo vo = new BoardVo();
+		   vo.setNo(no);
+		   vo.setTitle(title);
+		   vo.setContents(contents);
+		   
+		   boardService.modifyContents(vo);
+		   
 		    return "redirect:/board/view/" + no;
 	   }
 }

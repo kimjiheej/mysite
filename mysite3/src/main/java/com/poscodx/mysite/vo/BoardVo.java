@@ -2,7 +2,7 @@ package com.poscodx.mysite.vo;
 
 public class BoardVo {
 
-	private int no;
+	private Long no;
 	private String title;
 	private String contents;
 	private int hit;
@@ -14,11 +14,11 @@ public class BoardVo {
 	// user 의 no 와 name 을 따로 만들어준다. 나중에 조회하면서 필요하기 때문 !! 
 	private Long user_no;
 	private String name;
-
-	public int getNo() {
+	
+	public Long getNo() {
 		return no;
 	}
-	public void setNo(int no) {
+	public void setNo(Long no) {
 		this.no = no;
 	}
 	public String getTitle() {
@@ -81,4 +81,8 @@ public class BoardVo {
 				+ reg_date + ", g_no=" + g_no + ", o_no=" + o_no + ", depth=" + depth + ", user_no=" + user_no
 				+ ", name=" + name + "]";
 	}
+	
+	
+	
+	
 }
