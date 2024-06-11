@@ -50,6 +50,7 @@ public class BoardService {
 		boardRepository.insert(vo);
 	}
 	
+	
 	public int getNextNumber() {
 	   return boardRepository.getNextNum();
 	}

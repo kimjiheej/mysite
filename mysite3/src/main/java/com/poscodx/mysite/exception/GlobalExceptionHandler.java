@@ -13,7 +13,6 @@ public class GlobalExceptionHandler {
 
 	 // mysite 에서 발생하는 exception 은 다 여기로 모이게 된다 
 	
-	
 	// 모든 예외를 다 처리한다는 의미이다 !! 
     @ExceptionHandler(Exception.class)
 	public String handler(Exception e, Model model) {

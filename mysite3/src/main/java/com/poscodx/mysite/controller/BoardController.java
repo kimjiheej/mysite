@@ -23,7 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+import com.poscodx.mysite.security.Auth;
+import com.poscodx.mysite.security.AuthUser;
 import com.poscodx.mysite.service.BoardService;
 import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.mysite.vo.UserVo;
@@ -71,7 +72,6 @@ public class BoardController {
         return "board/list";
     }
     
-  
 	@RequestMapping(value ="/view/{no}", method=RequestMethod.GET)
 	public String view(@PathVariable("no") Long no, 
             @RequestParam(value = "curPage", required = false) String current, 
@@ -84,30 +84,30 @@ public class BoardController {
 	        return "board/view";
 	}
 
+	@Auth
 	@RequestMapping(value="/delete/{no}", method=RequestMethod.GET)
-	public String delete(@PathVariable("no") Long no, HttpSession session) {
+	public String delete(@PathVariable("no") Long no, @AuthUser UserVo authUser) {
 	
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+
 		boardService.deleteContents(no, authUser.getNo());
 		return "redirect:/board";
 	}
 	
-	
+	  @Auth
 	  @RequestMapping(value="/writeform", method=RequestMethod.GET)
-	    public String writeForm(HttpSession session, Model model) {
-	        UserVo authUser = (UserVo) session.getAttribute("authUser");
+	    public String writeForm(@AuthUser UserVo authUser, Model model) {
+	      
 	        model.addAttribute(authUser);
 	        return "board/write";
 	    }
 	  
-	  
 	   @RequestMapping(value="/write", method=RequestMethod.POST)
-	  public String write(HttpSession session, 
+	  public String write(@AuthUser UserVo authUser, 
 	                      @RequestParam("title") String title, 
 	                      @RequestParam(value = "no", required = false) Long num,
 	                      @RequestParam("contents") String contents, 
 	                      Model model) {
-	      UserVo authUser = (UserVo) session.getAttribute("authUser");
+	     
 	      if(authUser == null) {
 	          return "redirect:/board"; // Redirect to board page if user is not authenticated
 	      } else {
@@ -143,9 +143,10 @@ public class BoardController {
 	      return "redirect:/board"; // Redirect to board page after creating or updating board entry
 	  }
 	   
+	   @Auth
 	   @RequestMapping(value="/modifyform", method=RequestMethod.GET)
-	   public String modifyForm(@RequestParam("no") Long no, HttpSession session, Model model) {
-	       UserVo authUser = (UserVo) session.getAttribute("authUser");
+	   public String modifyForm(@RequestParam("no") Long no, @AuthUser UserVo authUser, Model model) {
+	   
 	       if (authUser == null) {
 	           return "redirect:/user/login";
 	       }
@@ -154,7 +155,7 @@ public class BoardController {
 	       return "board/modify";
 	   }
 	   
-	  
+	   @Auth
 	   @RequestMapping(value="/modify", method=RequestMethod.POST)
 	   public String modify(@RequestParam("no") Long no, @RequestParam("title") String title, @RequestParam("contents") String contents ) {
 		

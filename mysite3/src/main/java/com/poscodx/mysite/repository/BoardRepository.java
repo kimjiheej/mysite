@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StopWatch;
 
 import com.poscodx.mysite.vo.BoardVo;
 
@@ -41,7 +42,12 @@ public class BoardRepository {
 	}
    
 	public void insert(BoardVo vo) {
+		
+	
 		sqlSession.insert("board.insertBoard", vo);
+		
+
+	
 	}
 	
 	public int getNextNum() {
