@@ -33,14 +33,13 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		
-		
-			<!-- spring aspect --> 
+		<!-- spring aspect -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		
+				
 		<!-- common dbcp -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
@@ -67,6 +66,18 @@
 			<version>2.0.7</version>
 		</dependency>
 		
+		<!-- common fileupload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+				
 		<!-- jstl -->
 		<dependency>
 		    <groupId>jstl</groupId>
