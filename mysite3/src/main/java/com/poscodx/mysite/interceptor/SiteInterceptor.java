@@ -15,6 +15,7 @@ public class SiteInterceptor implements HandlerInterceptor {
 		this.siteService = siteService;
 	}
 	
+	// 쿼리 날리는 것을 줄이기 위해 ! 즉 효율성을 높이기 위해서 사용한다 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -23,7 +24,6 @@ public class SiteInterceptor implements HandlerInterceptor {
 			siteVo = siteService.getSite();
 			request.getServletContext().setAttribute("sitevo", siteVo);
 		}
-		
 		return true;
 	}
 

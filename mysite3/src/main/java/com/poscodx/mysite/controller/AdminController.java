@@ -33,10 +33,8 @@ public class AdminController {
 	public String main(Model model) {
 		SiteVo vo = siteService.getSite();
 		model.addAttribute("siteVo", vo);
-		
 		return "admin/main";
 	}
-
 	
 	@RequestMapping("/main/update")
 	public String update(SiteVo vo, @RequestParam("file") MultipartFile file) {
@@ -44,10 +42,8 @@ public class AdminController {
 		if(profile != null) {
 			vo.setProfile(profile);
 		}
-		
 		siteService.updateSite(vo);
-		servletContext.setAttribute("sitevo", vo);
-		
+		servletContext.setAttribute("sitevo", vo);	
 		return "redirect:/admin";
 	}
 
