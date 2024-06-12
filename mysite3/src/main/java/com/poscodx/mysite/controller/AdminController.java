@@ -38,8 +38,6 @@ public class AdminController {
 	}
 
 	
-	
-	
 	@RequestMapping("/main/update")
 	public String update(SiteVo vo, @RequestParam("file") MultipartFile file) {
 		String profile = fileUploadService.restore(file);

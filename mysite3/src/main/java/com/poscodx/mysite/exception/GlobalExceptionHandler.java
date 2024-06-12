@@ -3,6 +3,8 @@ package com.poscodx.mysite.exception;
 import java.io.StringWriter;
 import java.io.PrintWriter;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,19 +13,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	 // mysite 에서 발생하는 exception 은 다 여기로 모이게 된다 
 	
-	// 모든 예외를 다 처리한다는 의미이다 !! 
+	private static final Log logger = LogFactory.getLog(GlobalExceptionHandler.class);
     @ExceptionHandler(Exception.class)
 	public String handler(Exception e, Model model) {
 		
-    	//1. 로깅(logging) 
-    
-    	
     	StringWriter errors = new StringWriter();
     	e.printStackTrace(new PrintWriter(errors));
-    	System.out.println(errors.toString());
-    	
+        logger.error(errors.toString());
+    
     	//2. 사과 
     	model.addAttribute("error", errors);
     	// 500 페이지의 에러 -> tomcat 까지 나왔구나. 잘 일어나지 않게 된다. 
