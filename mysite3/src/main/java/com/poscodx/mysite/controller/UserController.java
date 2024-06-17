@@ -1,10 +1,17 @@
 package com.poscodx.mysite.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,13 +27,35 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping(value="/join", method=RequestMethod.GET)
-	public String join() {
+	public String join(@ModelAttribute UserVo vo) {
 		return "user/join";
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public String join(UserVo vo) {
-		userService.join(vo);
+	public String join(@ModelAttribute @Valid UserVo vo, BindingResult result, Model model) {
+		
+		// modelAttribute 는 다시 jsp 에 주는 것이다 
+		//vo 가 자동으로 들어가 있게 된다 !! 
+	
+		
+		 if(result.hasErrors()) { // 에러가 있으면 다시 저 화면으로 돌아가게 한다 ! 
+			 
+			 
+	//		  model.addAttribute("userVo", vo);
+//			List<ObjectError> list = result.getAllErrors(); // 에러를 뽑아내준다 ! 
+//			for(ObjectError error : list) {
+//				System.out.println(error);
+//			}
+//			 
+			 // result 를 jsp 로 보내야 한다 ! 
+			 
+			 Map<String,Object> map = result.getModel();
+		     model.addAllAttributes(map);
+		   
+			return "user/join";
+			 
+		 }
+			userService.join(vo);
 		return "redirect:/user/joinsuccess";
 	}
 
@@ -56,7 +85,6 @@ public class UserController {
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String update(@AuthUser UserVo authUser, UserVo vo) {
 	
-
 		vo.setNo(authUser.getNo());
 		userService.update(vo);
 		
