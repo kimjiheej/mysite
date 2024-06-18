@@ -17,5 +17,4 @@ public class DeleteFormGuestBook implements Action {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/guestbook/deleteform.jsp");
 		rd.forward(request, response);	
 	}
-
 }
