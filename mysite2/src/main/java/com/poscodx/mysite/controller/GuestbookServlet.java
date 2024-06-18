@@ -41,6 +41,3 @@ public class GuestbookServlet extends ActionServlet {
 			return mapAction.getOrDefault(actionName, new GuestBookListAction());
 		}
 }
-
-
-
