@@ -15,7 +15,6 @@ import org.springframework.transaction.TransactionManager;
 @PropertySource("classpath:com/poscodx/mysite/config/app/jdbc.properties")
 public class DBConfig {
 	
-	// Environment 객체는 프로퍼티 파일의 값을 읽을 수 있게 한다. 
 	@Autowired
 	private Environment env;
 	
