@@ -12,6 +12,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 import com.poscodx.mysite.config.AppConfig;
 import com.poscodx.mysite.config.WebConfig;
 
+
 public class MySiteWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override

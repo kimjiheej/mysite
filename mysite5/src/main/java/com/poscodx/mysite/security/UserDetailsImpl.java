@@ -9,16 +9,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.poscodx.mysite.vo.UserVo;
 
-public class UserDetailsImpl extends UserVo implements UserDetails {
 
-	/**
-	 * 
-	 */
+public class UserDetailsImpl extends UserVo implements UserDetails  {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Arrays.asList(new SimpleGrantedAuthority("ROLE_"+ getRole()));
+		return Arrays.asList(new SimpleGrantedAuthority("ROLE_" + getRole()));
 	}
 
 	@Override
@@ -28,31 +25,27 @@ public class UserDetailsImpl extends UserVo implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return super.getEmail();
+		return getEmail();
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }

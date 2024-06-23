@@ -12,7 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import com.poscodx.mysite.exception.UserRepositoryException;
+import com.poscodx.mysite.security.UserDetailsImpl;
 import com.poscodx.mysite.vo.UserVo;
+
 
 
 @Repository
@@ -37,15 +39,16 @@ public class UserRepository {
 		return sqlSession.selectOne("user.findByNo", no);
 	}
 
+	public UserVo findByEmail(String email) {
+		return sqlSession.selectOne("user.findByEmail", email);
+	}
+
+	public UserDetailsImpl findByEmail2(String email) {
+		return sqlSession.selectOne("user.findByEmail2", email);
+	}
+
 	public int update(UserVo vo) {
 		return sqlSession.update("user.update", vo);
 	}
 
-	public UserVo findByEmail(String email) {
-	   return sqlSession.selectOne("user.findByEmail", email);
-	}
-
-	public UserDetails findByEmail2(String email) {
-	   return sqlSession.selectOne("user.findByEmail2", email);
-	}
 }
