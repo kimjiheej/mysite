@@ -15,30 +15,28 @@ import com.poscodx.mysite.vo.SiteVo;
 
 
 public class ApplicationContextEventListener {
-   
-   @Autowired
-   private ApplicationContext applicationContext;
-   
-   @EventListener({ContextRefreshedEvent.class})
-   public void handleContextRefreshEvent() {
-      System.out.println("--- Context Refreshed Event Received ---");
-      
-      SiteService siteService= applicationContext.getBean(SiteService.class);
-      SiteVo vo = siteService.getSite();
-      
-      MutablePropertyValues propertyValues = new MutablePropertyValues();
-      propertyValues.add("title", vo.getTitle());
-      propertyValues.add("profile", vo.getProfile());
-      propertyValues.add("welcome", vo.getWelcome());
-      propertyValues.add("description", vo.getDescription());
-   
-      GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
-      beanDefinition.setBeanClass(SiteVo.class);
-      beanDefinition.setPropertyValues(propertyValues);
-      
-      applicationContext.getAutowireCapableBeanFactory();
-      
-      BeanDefinitionRegistry registry=(BeanDefinitionRegistry) applicationContext.getAutowireCapableBeanFactory();
-      registry.registerBeanDefinition("site", beanDefinition);
-   }
+	
+	@Autowired
+	private ApplicationContext applicationContext;
+
+	@EventListener({ContextRefreshedEvent.class})
+	public void handleContextRefreshEvent() {
+		System.out.println("--- Context Refreshed Event Received ---");
+	
+		SiteService siteService = applicationContext.getBean(SiteService.class);
+		SiteVo vo = siteService.getSite();
+		
+		MutablePropertyValues propertyValues = new MutablePropertyValues();
+		propertyValues.add("title", vo.getTitle());
+		propertyValues.add("profile", vo.getProfile());
+		propertyValues.add("welcome", vo.getWelcome());
+		propertyValues.add("description", vo.getDescription());
+		
+		GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
+		beanDefinition.setBeanClass(SiteVo.class);
+		beanDefinition.setPropertyValues(propertyValues);
+		
+		BeanDefinitionRegistry registry = (BeanDefinitionRegistry)applicationContext.getAutowireCapableBeanFactory();
+		registry.registerBeanDefinition("site", beanDefinition);
+	}
 }

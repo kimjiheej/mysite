@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -54,9 +55,19 @@
                             <td>${lists.name}</td>
                             <td>${lists.hit}</td>
                             <td>${lists.reg_date}</td>
-                            <c:if test="${authUser.no eq lists.user_no}">
-                                <td><a href="${pageContext.request.contextPath}/board/delete/${lists.no}" class="del">삭제</a></td>
-                            </c:if>
+                      
+           
+                                <td>
+								<sec:authorize access="isAuthenticated()">
+									<sec:authentication property="principal" var="authUser"/>
+									<c:if test="${authUser.no == lists.user_no }">
+								  <a href="${pageContext.request.contextPath}/board/delete/${lists.no}" class="del">삭제</a>
+									</c:if>
+								</sec:authorize>
+							</td>
+                          
+                            
+                            	
                         </tr>
                     </c:forEach>
                 </table>
@@ -81,10 +92,10 @@
                     </ul>
                 </div>
                      <div class="bottom">
-                    <c:if test="${not empty authUser}">
-                      <!--  /board/writeform 완료  -->
-                        <a href="${pageContext.request.contextPath}/board/writeform" id="new-book">글쓰기</a>
-                    </c:if>
+                    	<sec:authorize access="isAuthenticated()">
+                                                        <a href="${pageContext.request.contextPath}/board/writeform" id="new-book">글쓰기</a>
+					</sec:authorize>
+                    
                 </div>
             </div>
         </div>

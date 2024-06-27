@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.poscodx.mysite.vo.UserVo;
 
-
 public class UserDetailsImpl extends UserVo implements UserDetails  {
 	private static final long serialVersionUID = 1L;
 

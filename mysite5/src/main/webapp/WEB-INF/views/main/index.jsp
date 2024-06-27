@@ -15,7 +15,7 @@
 		<div id="wrapper">
 			<div id="content">
 				<div id="site-introduction">
-					<img id="profile" src="${pageContext.request.contextPath }${sitevo.profile }" style="width:420px">
+					<img id="profile" src="${pageContext.request.contextPath }${sitevo.profile }" style="width:250px">
 					<h2>
 						${sitevo.welcome }
 					</h2>

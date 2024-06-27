@@ -1,21 +1,22 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-   <modelVersion>4.0.0</modelVersion>
-    <groupId>com.poscodx</groupId>
-  <artifactId>mysite5</artifactId>
-  <packaging>war</packaging>
-    <version>0.0.1-SNAPSHOT</version>
-  
-  <properties>
+	<groupId>com.poscodx</groupId>
+	<artifactId>mysite5</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.outputEncoding>UTF-8</project.build.outputEncoding>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<org.springframework-version>5.3.36</org.springframework-version>
 	    <jcloverslf4j.version>1.7.36</jcloverslf4j.version>		
-    	<logback.version>1.2.11</logback.version>	
-    	<org.springframework.security-version>5.8.8</org.springframework.security-version>
-    	
+    	<logback.version>1.2.11</logback.version>
+		<org.springframework.security-version>5.8.8</org.springframework.security-version>
 	</properties>
 	
 	<dependencies>
@@ -47,7 +48,7 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		
-			<!-- spring security web -->
+		<!-- spring security web -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
@@ -60,14 +61,14 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>${org.springframework.security-version}</version>
 		</dependency>
-		
+
 		<!-- spring security tag library -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${org.springframework.security-version}</version>
 		</dependency>
-				
+						
 		<!-- common dbcp -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
@@ -94,14 +95,13 @@
 			<version>2.0.7</version>
 		</dependency>
 		
-		<!-- validation -->
+		<!-- validation -->		
 		<dependency>
-   <groupId>org.hibernate</groupId>
-   <artifactId>hibernate-validator</artifactId>
-   <version>6.2.3.Final</version>
-</dependency>
+		   <groupId>org.hibernate</groupId>
+		   <artifactId>hibernate-validator</artifactId>
+		   <version>6.2.3.Final</version>
+		</dependency>
 
-		
 		<!-- common fileupload -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
@@ -157,6 +157,5 @@
 	
 	<build>
 		<finalName>mysite5</finalName>
-	</build>	
-	
+	</build>		
 </project>

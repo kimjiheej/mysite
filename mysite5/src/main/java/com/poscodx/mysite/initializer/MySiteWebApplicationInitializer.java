@@ -41,4 +41,5 @@ public class MySiteWebApplicationInitializer extends AbstractAnnotationConfigDis
 		servlet.setThrowExceptionIfNoHandlerFound(true);
 		return servlet;
 	}
+	
 }

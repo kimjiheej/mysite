@@ -10,6 +10,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
 @Configuration
 @PropertySource("classpath:com/poscodx/mysite/config/web/fileupload.properties")
 public class FileUploadConfig implements WebMvcConfigurer {
