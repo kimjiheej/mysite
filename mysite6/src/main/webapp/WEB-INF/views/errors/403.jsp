@@ -7,9 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Bad Request(403): Custom</h1>
+	<h1>Forbidden(403) : Custom</h1>
 	<p>
-	  접근할 수 없습니다.
+		접급할 수 없습니다.
 	</p>
 </body>
 </html>

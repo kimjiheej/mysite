@@ -1,11 +1,13 @@
 package com.poscodx.mysite.vo;
 
 public class SiteVo {
+
 	private Long no;
-	private String title;
-	private String welcome;
-	private String profile;
-	private String description;
+	private String title; 
+	private String welcome; 
+    private String profile; 
+    private String description;
+    
 	public Long getNo() {
 		return no;
 	}
@@ -40,5 +42,7 @@ public class SiteVo {
 	public String toString() {
 		return "SiteVo [no=" + no + ", title=" + title + ", welcome=" + welcome + ", profile=" + profile
 				+ ", description=" + description + "]";
-	}
+	} 
+    
+    
 }

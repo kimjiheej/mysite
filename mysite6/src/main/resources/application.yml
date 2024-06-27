@@ -61,12 +61,10 @@ server:
       encoding:
          charset: utf-8
          enabled: true
-   error: 
-      whitelabel: 
+   error:
+      whitelabel:
          enabled: false
       path: /error
-
-
 
 # logging
 logging:

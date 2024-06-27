@@ -1,13 +1,26 @@
 package com.poscodx.mysite.controller;
 
+import java.util.Enumeration;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.poscodx.mysite.service.SiteService;
 import com.poscodx.mysite.vo.UserVo;
 
 @Controller
 public class MainController {
+	private SiteService siteService;
+	
+	public MainController(SiteService siteService) {
+		this.siteService = siteService;
+	}
+	
 	@RequestMapping({"/", "/main"})
 	public String index() {
 		return "main/index";
@@ -19,20 +32,21 @@ public class MainController {
 		return "Hello World";
 	}
 	
-	@ResponseBody
+	@ResponseBody 
 	@RequestMapping("/msg02")
 	public String message02(String name) {
-		return "안녕~ " + name;
+		return "안녕 ~" + name;
 	}
-
-	@ResponseBody
-	@RequestMapping("/msg03")
+	
+	@ResponseBody 
+	@RequestMapping("/msg03") 
 	public Object message03() {
 		UserVo vo = new UserVo();
 		vo.setNo(1L);
 		vo.setName("둘리");
 		vo.setEmail("dooly@gmail.com");
 		
-		return vo; 
+		
+		return vo;
 	}
 }
