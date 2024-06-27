@@ -21,6 +21,15 @@ spring:
       #   prefix: /WEB-INF/views/
       #   suffix: .jsp
 
+   #thymeleaf
+   thymeleaf:
+      check-template-location: true
+      mode: HTML	
+      prefix: classpath:templates/
+      suffix: .html
+      encoding: UTF-8
+      cache: false
+      
    # web
    web:
       resources:
@@ -57,16 +66,14 @@ mybatis:
 server:
    port: 8088
    servlet:
-      context-path: /mysite6
+      context-path: /mysite7
       encoding:
          charset: utf-8
          enabled: true
-   error: 
-      whitelabel: 
+   error:
+      whitelabel:
          enabled: false
       path: /error
-
-
 
 # logging
 logging:
