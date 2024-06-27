@@ -1,8 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
+<%@page import="java.time.LocalDateTime" %>
+<%@page import="java.time.format.DateTimeFormatter"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<% pageContext.setAttribute("newline", "\n"); %>
+
+
+
+<%
+ pageContext.setAttribute("newline", "\n");
+%>
+ 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +26,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="guestbook">
-				<form action="${pageContext.request.contextPath}/guestbook/add" method="post">
+				<form action="${pageContext.request.contextPath}/guestbook/insert" method="post">
 					<table>
 						<tr>
 							<td>이름</td><td><input type="text" name="name"></td>
@@ -29,25 +40,27 @@
 						</tr>
 					</table>
 				</form>
-				<ul>
-					<c:set var="count" value="${fn:length(list) }" />
-					<c:forEach items="${list }" var="vo" varStatus="status" >
+					<ul>
+					<c:set var="count" value="${fn:length(list)}" />
+					<c:forEach var="vo" items="${list}" varStatus="status">
 						<li>
 							<table>
 								<tr>
 									<td>[${count - status.index}]</td>
-									<td>${vo.name }</td>
-									<td>${vo.regDate }</td>
-									<td><a href="${pageContext.request.contextPath }/guestbook/delete/${vo.no }">삭제</a></td>
+									<td>${vo.name}</td>
+									<td>
+									   ${vo.regDate} 
+									</td>
+									<td><a href="${pageContext.request.contextPath}/guestbook/deleteform/${vo.no}">삭제</a></td>
 								</tr>
 								<tr>
 									<td colspan=4>
-										${fn:replace(fn:replace(fn:replace(vo.contents, ">", "&gt;"), "<", "&lt;"), newline, "<br>") }
+									 	   ${fn:replace(vo.getContents(), newline, "<br>") }
 									</td>
 								</tr>
 							</table>
 							<br>
-						</li>				
+						</li>
 					</c:forEach>
 				</ul>
 			</div>
