@@ -5,7 +5,11 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+
+
 public class UserVo {
+	
+	
 	private Long no;
 	
 	@NotEmpty
@@ -15,15 +19,21 @@ public class UserVo {
 	@NotEmpty
 	@Email
 	private String email;
-
+	
 	@NotEmpty
-	@Length(min=4, max=16)
+	@Length(min=4, max=8)
 	private String password;
+	
 	
 	private String gender;
 	private String joinDate;
 	private String role;
 	
+	@Override
+	public String toString() {
+		return "UserVo [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password + ", gender="
+				+ gender + ", joinDate=" + joinDate + ", role=" + role + "]";
+	}
 	public Long getNo() {
 		return no;
 	}
@@ -66,10 +76,7 @@ public class UserVo {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	
 
-	@Override
-	public String toString() {
-		return "UserVo [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password + ", gender="
-				+ gender + ", joinDate=" + joinDate + ", role=" + role + "]";
-	}
 }
+

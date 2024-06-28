@@ -1,5 +1,8 @@
 package com.poscodx.mysite.vo;
 
+import java.security.Timestamp;
+
+
 public class GuestbookVo {
 	private Long no;
 	private String name;
