@@ -32,87 +32,59 @@ import com.poscodx.mysite.security.UserDetailsServiceImpl;
 @EnableWebSecurity
 public class SecurityConfig {
 	@Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return new WebSecurityCustomizer() {
-            @Override
-            public void customize(WebSecurity web) {
-                web
-            		.ignoring()
-            		.requestMatchers(new AntPathRequestMatcher("/favicon.ico"))
-            		.requestMatchers(new AntPathRequestMatcher("/assets/**"));
-            }
-        };
-    }
+	public WebSecurityCustomizer webSecurityCustomizer() {
+		return new WebSecurityCustomizer() {
+			@Override
+			public void customize(WebSecurity web) {
+				web.ignoring().requestMatchers(new AntPathRequestMatcher("/favicon.ico"))
+						.requestMatchers(new AntPathRequestMatcher("/assets/**"));
+			}
+		};
+	}
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    	http
-    		.logout()
-    		.logoutUrl("/user/logout")
-    		.and()
-    		
-       		.formLogin()
-       		.loginPage("/user/login")
-       		.loginProcessingUrl("/user/auth")
-       		.usernameParameter("email")
-       		.passwordParameter("password")
-       		.defaultSuccessUrl("/")
-       		// .failureUrl("/user/login?result=fail")
-       		.failureHandler(new AuthenticationFailureHandler() {
-				@Override
-				public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-						AuthenticationException exception) throws IOException, ServletException {
-					request.setAttribute("email", request.getParameter("email"));
-					request
-						.getRequestDispatcher("/user/login")
-						.forward(request, response);
-				}
-       		})
-       		.and()
-       		
-       		.csrf()
-       		.disable()
-    	
-       		.authorizeHttpRequests(registry -> {
-       			registry
-       				/* ACL */
-   					.requestMatchers(new RegexRequestMatcher("^/admin/?.*$", null))
-   					.hasRole("ADMIN")
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http
+				// 로그아웃 설정
+				.logout().logoutUrl("/user/logout").and()
+				// 로그인 설정
+				.formLogin().loginPage("/user/login").loginProcessingUrl("/user/auth").usernameParameter("id")
+				.passwordParameter("password").defaultSuccessUrl("/")
+				.failureUrl("/user/login?result=fail")
+				// 로그인 실패시 id 다시 보내주는 블럭
+				.failureHandler(new AuthenticationFailureHandler() {
+					@Override
+					public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+							AuthenticationException exception) throws IOException, ServletException {
+						request.setAttribute("id", request.getParameter("id"));
+						request.getRequestDispatcher("/user/login").forward(request, response);
+					}
+				}).and()
 
-   					.requestMatchers(new RegexRequestMatcher("^/board/?(write|reply|delete|modify).*$", null))
-   					.hasAnyRole("ADMIN", "USER")
+				.csrf().disable();
 
-   					.requestMatchers(new RegexRequestMatcher("^/user/update$", null))
-   					.hasAnyRole("ADMIN", "USER")
-       	       		
-       				.anyRequest()
-       	       		.permitAll();
-			});
-//       		.exceptionHandling(exceptionHandlingConfigurer -> {
-//       			exceptionHandlingConfigurer.accessDeniedPage("/WEB-INF/views/error/403.jsp")
-//			});
-       	
-    	return http.build();
-    }
-    
-    // Authentication Manager
-    @Bean
-    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-    	DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-    	authenticationProvider.setPasswordEncoder(passwordEncoder);
-    	authenticationProvider.setUserDetailsService(userDetailsService);
-    	
-    	return new ProviderManager(authenticationProvider);
-    }
-    
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-    	return new BCryptPasswordEncoder(4 /* 4 ~ 31 */);
-    }
-    
-    @Bean
-    public UserDetailsService userDetailsService() {
-    	return new UserDetailsServiceImpl();
-    }
+		return http.build();
+	}
+
+	// Authentication Manager
+	@Bean
+	public AuthenticationManager authenticationManager(UserDetailsService userDetailsService,
+			PasswordEncoder passwordEncoder) {
+		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+		authenticationProvider.setPasswordEncoder(passwordEncoder);
+		authenticationProvider.setUserDetailsService(userDetailsService);
+
+		return new ProviderManager(authenticationProvider);
+	}
+
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder(4 /* 4 ~ 31 */);
+	}
+
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return new UserDetailsServiceImpl();
+	}
     
 }
