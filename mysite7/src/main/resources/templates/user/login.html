@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title th:text="${@site.title}"></title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link th:href="@{/assets/css/user.css}" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <title>mysite</title>
+    <link th:href="@{/assets/css/user.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<div id="container">
-		<th:block th:include="includes/header"></th:block>
-		<div id="content">
-			<div id="user">
-				<form id="login-form" name="loginform" method="post" th:action="@{/user/auth}">
-					<label class="block-label" for="email" th:text="#{user.signin.label.email}"></label>
-					<input type="text" id="email" name="email" th:value="${email}">
-					<label class="block-label" th:text="#{user.signin.label.password}"></label>
-					<input type="password" name="password" value="">
-					<p th:if="${email != null}" th:text="#{user.signin.fail}"></p>
-					<input type="submit" th:value="#{user.signin.button.text}">
-				</form>
-			</div>
-		</div>
-		<th:block th:include="includes/navigation"></th:block>
-		<th:block th:include="includes/footer"></th:block>
-	</div>
+    <div id="container">
+        <div th:replace="/WEB-INF/views/includes/header :: header"></div>
+        <div id="content">
+            <div id="user">
+                <form id="login-form" name="loginform" th:action="@{/user/auth}" method="post">
+                    <label class="block-label" for="email">이메일</label>
+                    <input id="email" name="email" type="text" th:value="${email}">
+                    <label class="block-label">패스워드</label>
+                    <input name="password" type="password" value="">
+                    <div th:if="${not #strings.isEmpty(email)}">
+                        <p>
+                            로그인이 실패했습니다.
+                        </p>
+                    </div>
+                    <input type="submit" value="로그인">
+                </form>
+            </div>
+        </div>
+        <div th:replace="/WEB-INF/views/includes/navigation :: navigation"></div>
+        <div th:replace="/WEB-INF/views/includes/footer :: footer"></div>
+    </div>
 </body>
 </html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>mysite</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link th:href="@{${#servletContext.contextPath}/assets/css/guestbook.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="container">
+        <div th:replace="/WEB-INF/views/includes/header :: header"></div>
+        <div id="content">
+            <div id="guestbook">
+                <form th:action="@{${#servletContext.contextPath}/guestbook/insert}" method="post">
+                    <table>
+                        <tr>
+                            <td>이름</td><td><input type="text" name="name"></td>
+                            <td>비밀번호</td><td><input type="password" name="password"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><textarea name="contents" id="content"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" align="right"><input type="submit" value=" 확인 "></td>
+                        </tr>
+                    </table>
+                </form>
+                <ul>
+                    <li th:each="vo, status : ${list}">
+                        <table>
+                            <tr>
+                                <td th:text="${#numbers.sequence(#lists.size(list), 1, -1)[status.index]}"></td>
+                                <td th:text="${vo.name}"></td>
+                                <td th:text="${vo.regDate}"></td>
+                                <td><a th:href="@{${#servletContext.contextPath}/guestbook/deleteform/{no}(no=${vo.no})}">삭제</a></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" th:text="${#strings.replace(vo.contents, '\n', '<br>') }"></td>
+                            </tr>
+                        </table>
+                        <br>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div th:replace="/WEB-INF/views/includes/navigation :: navigation"></div>
+        <div th:replace="/WEB-INF/views/includes/footer :: footer"></div>
+    </div>
+</body>
+</html>
