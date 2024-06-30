@@ -35,7 +35,23 @@ public class MvcConfig implements WebMvcConfigurer {
 
 		viewResolver.setTemplateEngine(templateEngine);
 		viewResolver.setCharacterEncoding("UTF-8");
+		viewResolver.setOrder(1);
 
+		return viewResolver;
+	}
+	
+	// JSP View Resolver
+	@Bean
+	public ViewResolver viewResolver() {
+		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+		viewResolver.setViewClass(JstlView.class);
+		viewResolver.setPrefix("/WEB-INF/");
+		viewResolver.setSuffix(".jsp");
+		viewResolver.setExposeContextBeansAsAttributes(true);
+		viewResolver.setExposedContextBeanNames("site");
+		viewResolver.setViewNames("views/*");
+		viewResolver.setOrder(0);
+		
 		return viewResolver;
 	}
 	
