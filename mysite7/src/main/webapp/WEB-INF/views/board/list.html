@@ -1,115 +1,75 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>mysite</title>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <link href="${pageContext.request.contextPath}/assets/css/board.css" rel="stylesheet" type="text/css">
+    <link th:href="@{/assets/css/board.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div id="container">
-        <c:import url="/WEB-INF/views/includes/header.jsp" />
+        <div th:replace="includes/header :: header"></div>
         <div id="content">
             <div id="board">
-              <form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
-					<input type="submit" value="찾기">
-				</form>
+                <form id="search_form" th:action="" method="post">
+                    <input type="text" id="kwd" name="kwd" value="">
+                    <input type="submit" value="찾기">
+                </form>
                 <table class="tbl-ex">
-                    <tr>
-                        <th>번호</th>
-                        <th>제목</th>
-                        <th>글쓴이</th>
-                        <th>조회수</th>
-                        <th>작성일</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                    <c:forEach var="lists" items="${list}" varStatus="status">
+                    <thead>
                         <tr>
-                            <td>${totalItem - (current - 1) * onePagesItem - status.index}</td>
-                            <td class="fixed-width">
-                                <c:choose>
-                                    <c:when test="${lists.depth == 0}">
-                                        <div style="text-align: center;">
-                                  <a href="${pageContext.request.contextPath}/board/view/${lists.no}?curPage=${current}" >
-                                                ${lists.title}
-                                            </a>
-                                        </div>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div style="display: flex; align-items: center; margin-left: ${lists.depth * 20}px;">
-                                            <c:if test="${lists.depth >= 1}">
-                                                <img src="${pageContext.request.contextPath}/assets/images/reply.png" />
-                                            </c:if>
-                                           <a href="${pageContext.request.contextPath}/board/view/${lists.no}?curPage=${current}" style="margin-left: 10px;">
-                                                ${lists.title}
-                                            </a>
-                                        </div>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                            <td>${lists.name}</td>
-                            <td>${lists.hit}</td>
-                            <td>${lists.reg_date}</td>
-                      
-           
-                                <td>
-								<sec:authorize access="isAuthenticated()">
-									<sec:authentication property="principal" var="authUser"/>
-									<c:if test="${authUser.no == lists.user_no }">
-								  <a href="${pageContext.request.contextPath}/board/delete/${lists.no}" class="del" style="background-image:url(${pageContext.request.contextPath }/assets/images/recycle.png)">삭제</a>
-									</c:if>
-								</sec:authorize>
-							</td>
-							
-								<td>
-								<sec:authorize access="isAuthenticated()">
-									<sec:authentication property="principal" var="authUser"/>
-									<c:if test="${authUser.no == vo.userNo }">
-										<a href="${pageContext.request.contextPath }/board/delete/${vo.no }?p=${map.currentPage }&kwd=${map.keyword }" class="del" style="background-image:url(${pageContext.request.contextPath }/assets/images/recycle.png)">삭제</a>
-									</c:if>
-								</sec:authorize>
-							</td>
-                          
-                            
-                            	
+                            <th>번호</th>
+                            <th>제목</th>
+                            <th>글쓴이</th>
+                            <th>조회수</th>
+                            <th>작성일</th>
+                            <th>&nbsp;</th>
                         </tr>
-                    </c:forEach>
+                    </thead>
+                    <tbody>
+                        <tr th:each="list, status : ${lists}">
+                            <td th:text="${totalItem - (current - 1) * onePagesItem - status.index}"></td>
+                            <td class="fixed-width">
+                                <div th:if="${list.depth == 0}" style="text-align: center;">
+                                    <a th:href="@{/board/view/{no}(no=${list.no}, curPage=${current})}" th:text="${list.title}"></a>
+                                </div>
+                                <div th:if="${list.depth > 0}" style="display: flex; align-items: center;" th:style="'margin-left: ' + (${list.depth} * 20) + 'px;'">
+                                    <img th:if="${list.depth >= 1}" th:src="@{/assets/images/reply.png}" />
+                                    <a th:href="@{/board/view/{no}(no=${list.no}, curPage=${current})}" th:style="'margin-left: 10px;'" th:text="${list.title}"></a>
+                                </div>
+                            </td>
+                            <td th:text="${list.name}"></td>
+                            <td th:text="${list.hit}"></td>
+                            <td th:text="${#dates.format(list.reg_date, 'yyyy-MM-dd')}"></td>
+                            <td>
+                                <sec:authorize access="isAuthenticated()">
+                                    <sec:authentication property="principal" var="authUser"/>
+                                    <th:block th:if="${authUser.no == list.user_no}">
+                                        <a th:href="@{/board/delete/{no}(no=${list.no})}" class="del" th:style="'background-image:url(' + @{${#mvc.url.contextPath}} + '/assets/images/recycle.png)'">삭제</a>
+                                    </th:block>
+                                </sec:authorize>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
                 <div class="pager">
                     <ul>
-                        <c:if test="${start > 1}">
-                            <li><a href="?page=${start - 1}">◀</a></li>
-                        </c:if>
-                        <c:forEach var="index" begin="${start}" end="${end}">
-                            <c:choose>
-                                <c:when test="${index == current}">
-                                    <li class="selected">${index}</li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li><a href="?page=${index}">${index}</a></li>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                        <c:if test="${end < totalPage}">
-                            <li><a href="?page=${end + 1}">▶</a></li>
-                        </c:if>
+                        <li th:if="${start > 1}"><a th:href="@{|?page=${start - 1}|}">◀</a></li>
+                        <li th:each="index : ${#numbers.sequence(start, end)}" th:classappend="${index == current} ? 'selected'">
+                            <a th:if="${index != current}" th:href="@{|?page=${index}|}" th:text="${index}"></a>
+                            <span th:if="${index == current}" th:text="${index}"></span>
+                        </li>
+                        <li th:if="${end < totalPage}"><a th:href="@{|?page=${end + 1}|}">▶</a></li>
                     </ul>
                 </div>
-                     <div class="bottom">
-                    	<sec:authorize access="isAuthenticated()">
-                                                        <a href="${pageContext.request.contextPath}/board/writeform" id="new-book">글쓰기</a>
-					</sec:authorize>
-                    
+                <div class="bottom">
+                    <sec:authorize access="isAuthenticated()">
+                        <a th:href="@{/board/writeform}" id="new-book">글쓰기</a>
+                    </sec:authorize>
                 </div>
             </div>
         </div>
-        <jsp:include page="/WEB-INF/views/includes/navigation.jsp" />
-        <jsp:include page="/WEB-INF/views/includes/footer.jsp" />
+        <div th:replace="includes/navigation :: navigation"></div>
+        <div th:replace="includes/footer :: footer"></div>
     </div>
 </body>
 </html>
