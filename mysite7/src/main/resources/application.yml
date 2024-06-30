@@ -17,9 +17,6 @@ spring:
    mvc:
       static-path-pattern: /assets/**
       throw-exception-if-no-handler-found: true
-      # view:
-      #   prefix: /WEB-INF/views/
-      #   suffix: .jsp
 
    #thymeleaf
    thymeleaf:
@@ -51,7 +48,7 @@ spring:
    # datasource
    datasource:
       driver-class-name: org.mariadb.jdbc.Driver
-      url: jdbc:mariadb://172.30.1.58:3306/webdb?charset=utf8
+      url: jdbc:mariadb://192.168.0.203:3306/webdb?charset=utf8
       username: webdb
       password: webdb
       hikari:

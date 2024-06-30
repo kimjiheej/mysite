@@ -1,12 +1,7 @@
 package com.poscodx.mysite.repository;
 
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
-
-import com.poscodx.mysite.vo.GuestbookVo;
 
 @Repository
 public class GuestbookLogRepository {
@@ -24,7 +19,7 @@ public class GuestbookLogRepository {
 		return sqlSession.update("guestbooklog.update-increase");
 	}
 	
-	public int update(Long no) {
-		return sqlSession.update("guestbooklog.update-decrease", no);
+	public int update(String regDate) {
+		return sqlSession.update("guestbooklog.update-decrease", regDate);
 	}
 }
