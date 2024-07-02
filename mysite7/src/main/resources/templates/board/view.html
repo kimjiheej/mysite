@@ -8,7 +8,7 @@
 <body>
     <div id="container">
         <!-- Header import -->
-        <div th:replace="/WEB-INF/views/includes/header :: header"></div>
+   <th:block th:include="includes/header"></th:block>
         
         <div id="wrapper">
             <div id="content">
@@ -51,10 +51,8 @@
             </div>
         </div>
 
-        <!-- Navigation import -->
-        <div th:replace="/WEB-INF/views/includes/navigation :: navigation"></div>
-        <!-- Footer import -->
-        <div th:replace="/WEB-INF/views/includes/footer :: footer"></div>
+   		<th:block th:include="includes/navigation"></th:block>
+		<th:block th:include="includes/footer"></th:block>
     </div>
 </body>
 </html>

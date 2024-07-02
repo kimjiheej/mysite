@@ -22,7 +22,6 @@ public class MainController {
 	
 	@RequestMapping({"/", "/main"})
 	public String index(Model model) {
-		model.addAttribute("servletContext", servletContext);
 		return "main/index";
 	}
 	

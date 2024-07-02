@@ -11,7 +11,7 @@
 	</parent>
 		
 	<groupId>com.poscodx</groupId>
-	<artifactId>mysite7</artifactId>
+	<artifactId>jblog7</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	

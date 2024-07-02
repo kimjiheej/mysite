@@ -8,7 +8,7 @@
 <body>
     <div id="container">
         <!-- Header import -->
-        <div th:replace="admin/include/header :: header"></div>
+     		<th:block th:include="admin/includes/header"></th:block>
         <div id="wrapper">
             <div id="content">
                 <div id="site-form">
@@ -32,8 +32,7 @@
                     </form>                                    
                 </div>
             </div>
-            <!-- Navigation import with parameter -->
-            <div th:replace="admin/include/navigation :: navigation(menu='main')"></div>
+           			<th:block th:include="admin/includes/navigation"></th:block>
         </div>
     </div>
 </body>
