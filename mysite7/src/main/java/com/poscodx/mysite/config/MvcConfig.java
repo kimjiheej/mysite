@@ -28,17 +28,6 @@ public class MvcConfig implements WebMvcConfigurer {
 		return localeResolver;
 	}
 	
-	// Thymeleaf View Resolver
-	@Bean
-	public ViewResolver thymeleafViewResolver(ISpringTemplateEngine templateEngine) {
-		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-
-		viewResolver.setTemplateEngine(templateEngine);
-		viewResolver.setCharacterEncoding("UTF-8");
-
-		return viewResolver;
-	}
-	
 	// Site Interceptor
 	@Bean
 	public HandlerInterceptor siteInterceptor() {

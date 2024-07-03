@@ -10,6 +10,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import com.poscodx.mysite.service.SiteService;
 import com.poscodx.mysite.vo.SiteVo;
 
+
 public class SiteInterceptor implements HandlerInterceptor {
 	@Autowired
 	private LocaleResolver localeResolver;
