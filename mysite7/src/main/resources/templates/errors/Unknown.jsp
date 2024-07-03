@@ -5,9 +5,9 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 <body>
-	<h1>Forbidden(403): Custom</h1>
+	<h1>Unknown: Custom</h1>
 	<p>
-		죄송합니다. 접근할 수 없습니다.
+		?
 	</p>
 </body>
 </html>
