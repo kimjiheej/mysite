@@ -1,11 +1,14 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-    <groupId>com.poscodx</groupId>
-  <artifactId>mysite4</artifactId>
-  <packaging>war</packaging>
-    <version>0.0.1-SNAPSHOT</version>
-  
-  <properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.poscodx</groupId>
+	<artifactId>mysite4</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.outputEncoding>UTF-8</project.build.outputEncoding>
 		<maven.compiler.source>17</maven.compiler.source>
@@ -70,12 +73,12 @@
 			<version>2.0.7</version>
 		</dependency>
 		
-		<!-- validation -->
+		<!-- validation -->		
 		<dependency>
-   <groupId>org.hibernate</groupId>
-   <artifactId>hibernate-validator</artifactId>
-   <version>6.2.3.Final</version>
-</dependency>
+		   <groupId>org.hibernate</groupId>
+		   <artifactId>hibernate-validator</artifactId>
+		   <version>6.2.3.Final</version>
+		</dependency>
 
 		
 		<!-- common fileupload -->
@@ -131,7 +134,7 @@
 		</dependency>		
 	</dependencies>
 	
-<build>
+	<build>
 		<finalName>mysite4</finalName>
 		<plugins>
 			<plugin>
@@ -143,7 +146,6 @@
 					<server>tomcat-poscodx</server>
 				</configuration>
 			</plugin>
-		</plugins>
+		</plugins>		
 	</build>		
-	
 </project>
