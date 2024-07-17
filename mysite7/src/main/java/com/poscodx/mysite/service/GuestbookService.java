@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.poscodx.mysite.repository.GuestbookLogRepository;
 import com.poscodx.mysite.repository.GuestbookRepository;
-import com.poscodx.mysite.repository.UserRepository;
 import com.poscodx.mysite.vo.GuestbookVo;
 
 @Service
@@ -26,8 +25,15 @@ public class GuestbookService {
 	
 	@Transactional
 	public void deleteContents(Long no, String password) {
-		guestbookLogRepository.update(no);
-		guestbookRepository.deleteByNoAndPassword(no, password);
+		GuestbookVo vo = guestbookRepository.findByNo(no);
+		if(vo == null) {
+			return;
+		}
+		
+		int count = guestbookRepository.deleteByNoAndPassword(no, password);
+		if(count == 1) {
+			guestbookLogRepository.update(vo.getRegDate());
+		}
 	}
 	
 	@Transactional

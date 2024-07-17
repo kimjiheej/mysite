@@ -37,7 +37,7 @@ public class WhitelabelErrorController implements ErrorController {
 			}
 		}
 
-		return "views/errors/unknown";
+		return "errors/unknown";
 	}
 	
 }
