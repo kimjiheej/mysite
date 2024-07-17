@@ -1,50 +1,56 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<script src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.9.0.js"></script>
-<script>
-$(function(){
-	$("#languages a").click(function(event){
-		event.preventDefault();
-		console.log($(this).data("lang"));
-		
-		document.cookie =
-			"lang="    + $(this).data("lang") + ";" +                 // name=value  
-			"path="    + "${pageContext.request.contextPath}" + ";" + // path
-			"max-age=" + (30*24*60*60)                                // max-age  
-	
-		// reload
-		location.reload();
-	});
-});
+<script th:src="@{'/assets/js/jquery/jquery-1.9.0.js'}"></script>
+<script th:inline="javascript">
+    $(function(){
+        $("#languages a").click(function(event){
+            event.preventDefault();
+            console.log($(this).data("lang"));
+            
+            /* JavaScript에서 타임리프 변수를 사용하기 위해 th:inline="javascript" 속성을 설정합니다. */
+            /* 타임리프의 context-path를 직접 지정하여 사용합니다. */
+            var contextPath = /*[[@{/}]]*/ '';
+            
+            document.cookie =
+                "lang="    + $(this).data("lang") + ";" +                 // name=value  
+                "path="    + contextPath + ";" + // path
+                "max-age=" + (30*24*60*60);                                // max-age  
+        
+            // reload
+            location.reload();
+        });
+    });
 </script>
-		<div id="header">
-			<h1>
-				<!-- ${sitevo.title } -->
-				${site.title }
-			</h1>
-			<div id="languages">
-				<c:choose>
-					<c:when test='${language == "en"}'>
-						<a href="" data-lang="ko">KR</a><a href="" class="active" data-lang="en">EN</a>
-					</c:when>
-					<c:otherwise>
-						<a href="" data-lang="ko" class="active">KR</a><a href="" data-lang="en">EN</a>
-					</c:otherwise>
-				</c:choose>
-			</div>			
-			<ul>
-				<sec:authorize access="!isAuthenticated()">
-					<li><a href="${pageContext.request.contextPath}/user/login">로그인</a><li>
-					<li><a href="${pageContext.request.contextPath}/user/join">회원가입</a><li>
-				</sec:authorize>
-				<sec:authorize access="isAuthenticated()">
-					<sec:authentication property="principal" var="user"/>
-					<li><a href="${pageContext.request.contextPath}/user/update">회원정보수정</a><li>
-					<li><a href="${pageContext.request.contextPath}/user/logout">로그아웃</a><li>
-					<li>${user.name }님 안녕하세요 ^^;</li>
-				</sec:authorize>
-			</ul>
-		</div>
+<div id="header">
+    <h1>
+        <!-- 타임리프 문법을 사용하여 변수를 출력합니다. -->
+        ${site.title}
+    </h1>
+    <div id="languages">
+        <c:choose>
+            <c:when test='${language == "en"}'>
+                <!-- 타임리프 문법을 사용하여 href 속성을 설정합니다. -->
+                <a th:href="@{'/changeLanguage?lang=ko'}" data-lang="ko">KR</a>
+                <a th:href="@{'/changeLanguage?lang=en'}" class="active" data-lang="en">EN</a>
+            </c:when>
+            <c:otherwise>
+                <!-- 타임리프 문법을 사용하여 href 속성을 설정합니다. -->
+                <a th:href="@{'/changeLanguage?lang=ko'}" class="active" data-lang="ko">KR</a>
+                <a th:href="@{'/changeLanguage?lang=en'}" data-lang="en">EN</a>
+            </c:otherwise>
+        </c:choose>
+    </div>
+    <ul>
+        <sec:authorize access="!isAuthenticated()">
+            <!-- 타임리프 문법을 사용하여 href 속성을 설정합니다. -->
+            <li><a th:href="@{'/user/login'}">로그인</a></li>
+            <li><a th:href="@{'/user/join'}">회원가입</a></li>
+        </sec:authorize>
+        <sec:authorize access="isAuthenticated()">
+            <sec:authentication property="principal" var="user"/>
+            <!-- 타임리프 문법을 사용하여 href 속성을 설정합니다. -->
+            <li><a th:href="@{'/user/update'}">회원정보수정</a></li>
+            <li><a th:href="@{'/user/logout'}">로그아웃</a></li>
+            <!-- 타임리프 문법을 사용하여 변수를 출력합니다. -->
+            <li th:text="${user.name} + '님 안녕하세요 ^^;'"></li>
+        </sec:authorize>
+    </ul>
+</div>

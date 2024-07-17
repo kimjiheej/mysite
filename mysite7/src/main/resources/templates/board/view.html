@@ -1,21 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%
-    pageContext.setAttribute("newline", "\n");
-%>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>mysite</title>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <link href="${pageContext.request.contextPath}/assets/css/board.css" rel="stylesheet" type="text/css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link th:href="@{/assets/css/board.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div id="container">
-        <c:import url="/WEB-INF/views/includes/header.jsp" />
+        <div th:replace="includes/header :: header"></div>
         
         <div id="wrapper">
             <div id="content">
@@ -26,41 +18,36 @@
                         </tr>
                         <tr>
                             <td class="label">제목</td>
-                            <td>${board.title}</td>
+                            <td th:text="${board.title}"></td>
                         </tr>
                         <tr>
                             <td class="label">내용</td>
                             <td>
-                                <div class="view-content">${fn:replace(board.contents, newline, "<br>")}</div>
+                                <div class="view-content" th:utext="${#strings.replace(board.contents, '\n', '<br>')}"></div>
                             </td>
                         </tr>
                     </table>
                    <div class="bottom">
-    <c:choose>
-        <c:when test="${board.user_no == authUser.no}">
-            <a href="${pageContext.request.contextPath}/board/modifyform?no=${board.no}">글수정</a>
-            <sec:authorize access="isAuthenticated()">
-                <a href="${pageContext.request.contextPath}/board/writeform?no=${board.no}">답글 달기</a>
-            </sec:authorize>
-            <a href="${pageContext.request.contextPath}/board">글목록</a>
-        </c:when>
-        <c:otherwise>
-            <sec:authorize access="isAuthenticated()">
-                <a href="${pageContext.request.contextPath}/board/writeform?no=${board.no}">답글 달기</a>
-            </sec:authorize>
-            <a href="${pageContext.request.contextPath}/board?page=${currentPage}">글목록</a>
-        </c:otherwise>
-    </c:choose>
-                    </div>
+                       <div th:if="${board.user_no == authUser.no}">
+                           <a th:href="@{/board/modifyform(no=${board.no})}">글수정</a>
+                           <div th:if="${#authorization.expression('isAuthenticated()')}">
+                               <a th:href="@{/board/writeform(no=${board.no})}">답글 달기</a>
+                           </div>
+                           <a th:href="@{/board}">글목록</a>
+                       </div>
+                       <div th:unless="${board.user_no == authUser.no}">
+                           <div th:if="${#authorization.expression('isAuthenticated()')}">
+                               <a th:href="@{/board/writeform(no=${board.no})}">답글 달기</a>
+                           </div>
+                           <a th:href="@{/board(page=${currentPage})}">글목록</a>
+                       </div>
+                   </div>
                 </div>
             </div>
         </div>
         
-       
-    
-        
-        <c:import url="/WEB-INF/views/includes/navigation.jsp" />
-        <c:import url="/WEB-INF/views/includes/footer.jsp" />
+        <div th:replace="includes/navigation :: navigation"></div>
+        <div th:replace="includes/footer :: footer"></div>
     </div>
 </body>
 </html>
